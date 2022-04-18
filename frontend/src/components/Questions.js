@@ -49,6 +49,11 @@ export default function Questions() {
 			</Typography>
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 65 }} aria-label="simple table">
+					<TableHead>
+						<TableRow>
+							<TableCell align="left">Title</TableCell>
+						</TableRow>
+					</TableHead>
 					<TableBody>
 						{questions.map((row, index) => (
 							<TableRow

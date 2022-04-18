@@ -64,24 +64,15 @@ const useAxiosRequest = () => {
 			});
 	};
 
-	// GET FILTER REQUEST
-	const getAllTasks = async (iconFilters, statusFilters) => {
-		let querystring = '?';
-		iconFilters.forEach((iconName) => {
-			querystring = querystring.concat(`avatarIcon=${iconName}&`);
-		});
-		statusFilters.forEach((status) => {
-			querystring = querystring.concat(`currentStatus=${status}&`);
-		});
-		//	console.log('querystring: ', querystring);
+	const getAllUsers = async () => {
 		return axios({
 			method: 'GET',
-			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks${querystring}`,
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/users/allusers`,
 			headers: {
 				authorization: `Bearer ${getUserToken()}`,
 			},
 		}).then((res) => {
-			return res.data.tasks;
+			return res.data.users;
 		});
 	};
 
@@ -159,7 +150,7 @@ const useAxiosRequest = () => {
 	return {
 		getTaskStatuses,
 		deleteTask,
-		getAllTasks,
+		getAllUsers,
 		createTask,
 		getUser,
 		createUser,
