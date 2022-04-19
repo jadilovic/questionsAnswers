@@ -9,13 +9,12 @@ import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { green, red } from '@mui/material/colors';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import useAnswerAPI from '../utils/useAnswerAPI';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import { getUserData } from '../auth/Authentication';
+import LikeDislike from './LikeDislike';
 
 export default function AnswerCard(props) {
 	const { answer, questionId, getAnswers, setLoading } = props;
@@ -87,12 +86,7 @@ export default function AnswerCard(props) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton aria-label="add to favorites">
-					<ThumbUpIcon />
-				</IconButton>
-				<IconButton aria-label="share">
-					<ThumbDownIcon />
-				</IconButton>
+				<LikeDislike answer answerId={answer._id} userId={getUserData()._id} />
 			</CardActions>
 		</Card>
 	);
