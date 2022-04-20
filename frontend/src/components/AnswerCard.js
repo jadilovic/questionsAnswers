@@ -84,11 +84,7 @@ export default function AnswerCard(props) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<LikeDislikeAnswer
-					answer={answer}
-					getAnswers={getAnswers}
-					userId={getUserData()._id}
-				/>
+				<LikeDislikeAnswer answerId={answer._id} userId={getUserData()._id} />
 			</CardActions>
 		</Card>
 	);

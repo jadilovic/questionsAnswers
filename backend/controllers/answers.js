@@ -16,6 +16,14 @@ const createAnswer = async (req, res) => {
 	res.status(StatusCodes.CREATED).json({ answer });
 };
 
+const getAnswer = async (req, res) => {
+	const {
+		params: { id: answerId },
+	} = req;
+	const answer = await Answer.findOne({ answerId });
+	res.status(StatusCodes.OK).json({ answer });
+};
+
 const deleteAnswer = async (req, res) => {
 	const {
 		user: { userId },
@@ -50,4 +58,5 @@ module.exports = {
 	createAnswer,
 	updateAnswer,
 	deleteAnswer,
+	getAnswer,
 };

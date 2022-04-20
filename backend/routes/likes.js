@@ -8,8 +8,8 @@ const {
 	getLikeAnswer,
 } = require('../controllers/likes');
 
-router.route('/answer/:id').get(getLikeAnswer);
 router.route('/').post(createLike);
 router.route('/:id').delete(deleteLike).get(getLike);
+router.route('/answer/:id').get(getLikeAnswer);
 
 module.exports = router;

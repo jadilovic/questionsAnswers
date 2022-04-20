@@ -10,54 +10,51 @@ import useDislikeAPI from '../utils/useDislikeAPI';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
 
 const LikeDislikeAnswer = (props) => {
-	const { userId, getAnswers } = props;
+	const { userId, answerId } = props;
 	const [likeObject, setLikeObject] = useState({});
 	const [dislikeObject, setDislikeObject] = useState({});
 	const [countLikes, setCountLikes] = useState(0);
 	const [countDislikes, setCountDislikes] = useState(0);
 	const [likeStatus, setLikeStatus] = useState(false);
 	const [dislikeStatus, setDislikeStatus] = useState(false);
+	const [answer, setAnswer] = useState({});
 	const likeAPI = useLikeAPI();
 	const answerAPI = useAnswerAPI();
 	const dislikeAPI = useDislikeAPI();
-	const local = useLocalStorageHook();
-	let variable = {};
-	if (props.answer) {
-		variable = { answerId: props.answer._id, userId };
-	} else {
-		variable = { questionId: props.question._id, userId };
-	}
+
+	const getAnswer = async () => {
+		const data = await answerAPI.getAnswer(answerId);
+		setAnswer({ ...data.answer });
+		getAnswerLikeStatus();
+	};
 
 	const getAnswerLikeStatus = async () => {
-		const data = await likeAPI.getLikeAnswer(variable.answerId);
+		const data = await likeAPI.getLikeAnswer(answerId);
 		setLikeObject({ ...data.like });
-		setCountLikes(props.answer.likes);
+		setCountLikes(answer.likes);
 		if (data.like) {
 			setLikeStatus(true);
-			setCountLikes(props.answer.likes);
+			setCountLikes(answer.likes);
 		} else {
 			setLikeStatus(false);
 		}
+		getAnswerDislikeStatus();
 	};
 
 	const getAnswerDislikeStatus = async () => {
-		const data = await dislikeAPI.getDislikeAnswer(variable.answerId);
+		const data = await dislikeAPI.getDislikeAnswer(answerId);
 		setLikeObject({ ...data.dislike });
-		setCountDislikes(props.answer.dislikes);
+		setCountDislikes(answer.dislikes);
 		if (data.dislike) {
 			setDislikeStatus(true);
-			setCountDislikes(props.answer.dislikes);
+			setCountDislikes(answer.dislikes);
 		} else {
 			setDislikeStatus(false);
 		}
 	};
 
 	useEffect(() => {
-		if (props.answer) {
-			getAnswerLikeStatus();
-			getAnswerDislikeStatus();
-		} else {
-		}
+		getAnswer();
 	}, []);
 
 	const createLike = async () => {
@@ -65,26 +62,20 @@ const LikeDislikeAnswer = (props) => {
 			deleteDislike();
 			setDislikeStatus(false);
 		}
-		const data = await likeAPI.createLike(variable);
-		const answer = props.answer;
+		const data = await likeAPI.createLike({ answerId, userId });
 		answer.likes = ++answer.likes;
 		setCountLikes(answer.likes);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
-		const questionObject = local.getCurrentQuestionObject();
-		getAnswers(questionObject._id);
+		setAnswer({ ...answer });
 		setLikeObject({ ...data.like });
 	};
 
 	const deleteLike = async () => {
 		await likeAPI.deleteLike(likeObject._id);
-		const answer = props.answer;
-		console.log('answer : ', answer);
 		answer.likes = --answer.likes;
 		setCountLikes(answer.likes);
-		console.log(answer);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
-		const questionObject = local.getCurrentQuestionObject();
-		getAnswers(questionObject._id);
+		setAnswer({ ...answer });
 		setLikeObject({});
 	};
 
@@ -103,27 +94,20 @@ const LikeDislikeAnswer = (props) => {
 			deleteLike();
 			setLikeStatus(false);
 		}
-		const data = await dislikeAPI.createDislike(variable);
-		console.log('created dislike : ', data.dislike);
-		const answer = props.answer;
+		const data = await dislikeAPI.createDislike({ answerId, userId });
 		answer.dislikes = ++answer.dislikes;
 		setCountDislikes(answer.dislikes);
-		console.log(answer);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
-		const questionObject = local.getCurrentQuestionObject();
-		getAnswers(questionObject._id);
+		setAnswer({ ...answer });
 		setDislikeObject({ ...data.dislike });
 	};
 
 	const deleteDislike = async () => {
-		console.log('to delete dislike : ', dislikeObject);
 		await dislikeAPI.deleteDislike(dislikeObject._id);
-		const answer = props.answer;
 		answer.dislikes = --answer.dislikes;
 		setCountDislikes(answer.dislikes);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
-		const questionObject = local.getCurrentQuestionObject();
-		getAnswers(questionObject._id);
+		setAnswer({ ...answer });
 		setDislikeObject({});
 	};
 

@@ -5,7 +5,7 @@ const useAnswerAPI = () => {
 	const getAllAnswers = async (questionId) => {
 		return axios({
 			method: 'GET',
-			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/answers/${questionId}`,
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/answers/question/${questionId}`,
 			headers: {
 				authorization: `Bearer ${getUserToken()}`,
 			},
@@ -30,18 +30,18 @@ const useAnswerAPI = () => {
 		});
 	};
 
-	// const getTask = async (taskId) => {
-	// 	const headers = {
-	// 		Authorization: `Bearer ${getUserToken()}`,
-	// 	};
-	// 	return axios
-	// 		.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-	// 			headers,
-	// 		})
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		});
-	// };
+	const getAnswer = async (answerId) => {
+		const headers = {
+			Authorization: `Bearer ${getUserToken()}`,
+		};
+		return axios
+			.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/answers/${answerId}`, {
+				headers,
+			})
+			.then((res) => {
+				return res.data;
+			});
+	};
 
 	const updateAnswer = async (editedAnswer) => {
 		const { _id, answer, likes, dislikes, createdBy } = editedAnswer;
@@ -85,7 +85,7 @@ const useAnswerAPI = () => {
 		deleteAnswer,
 		getAllAnswers,
 		createAnswer,
-		//	getTask,
+		getAnswer,
 		updateAnswer,
 	};
 };
