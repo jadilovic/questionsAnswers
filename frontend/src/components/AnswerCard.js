@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -14,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import useAnswerAPI from '../utils/useAnswerAPI';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import { getUserData } from '../auth/Authentication';
-import LikeDislike from './LikeDislike';
+import LikeDislikeAnswer from './LikeDislikeAnswer';
 
 export default function AnswerCard(props) {
 	const { answer, questionId, getAnswers, setLoading } = props;
@@ -86,7 +84,11 @@ export default function AnswerCard(props) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<LikeDislike answer answerId={answer._id} userId={getUserData()._id} />
+				<LikeDislikeAnswer
+					answer={answer}
+					getAnswers={getAnswers}
+					userId={getUserData()._id}
+				/>
 			</CardActions>
 		</Card>
 	);

@@ -6,6 +6,7 @@ export const login = (token, user) => {
 export const logout = () => {
 	localStorage.removeItem('token');
 	localStorage.removeItem('user');
+	localStorage.removeItem('currentQuestion');
 };
 
 export const getUserToken = () => {

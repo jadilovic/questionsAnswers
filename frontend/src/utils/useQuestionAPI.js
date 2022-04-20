@@ -43,24 +43,23 @@ const useQuestionAPI = () => {
 	// 		});
 	// };
 
-	// const updateTask = async (editedTask) => {
-	// 	const { _id, name, currentStatus, description, avatarColor, avatarIcon } =
-	// 		editedTask;
-	// 	const headers = {
-	// 		Authorization: `Bearer ${getUserToken()}`,
-	// 	};
-	// 	return axios
-	// 		.patch(
-	// 			`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${_id}`,
-	// 			{ name, currentStatus, description, avatarColor, avatarIcon },
-	// 			{
-	// 				headers,
-	// 			}
-	// 		)
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		});
-	// };
+	const updateQuestion = async (editedQuestion) => {
+		const { _id, title, question, likes, dislikes, createdBy } = editedQuestion;
+		const headers = {
+			Authorization: `Bearer ${getUserToken()}`,
+		};
+		return axios
+			.patch(
+				`${process.env.REACT_APP_SERVER_URL}/api/v1/questions/${_id}`,
+				{ title, question, likes, dislikes, createdBy },
+				{
+					headers,
+				}
+			)
+			.then((res) => {
+				return res.data;
+			});
+	};
 
 	// const deleteTask = async (taskId) => {
 	// 	const headers = {
@@ -84,7 +83,7 @@ const useQuestionAPI = () => {
 		getAllQuestions,
 		createQuestion,
 		//	getTask,
-		//	updateTask,
+		updateQuestion,
 	};
 };
 

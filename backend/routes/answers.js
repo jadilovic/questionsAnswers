@@ -6,14 +6,15 @@ const {
 	// getAnswer,
 	deleteAnswer,
 	createAnswer,
-	// updateAnswer,
+	updateAnswer,
 } = require('../controllers/answers');
 
 router.route('/').post(createAnswer);
-router.route('/:id').get(getAllAnswers).delete(deleteAnswer);
-// router
-// 	.route('/:id')
+router
+	.route('/:id')
+	.get(getAllAnswers)
+	.delete(deleteAnswer)
+	.patch(updateAnswer);
 // 	.get(getAnswer)
-// 	.patch(updateAnswer)
 
 module.exports = router;

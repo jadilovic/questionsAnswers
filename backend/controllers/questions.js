@@ -16,33 +16,21 @@ const createQuestion = async (req, res) => {
 	res.status(StatusCodes.CREATED).json({ question });
 };
 
-/*
-const updateTask = async (req, res) => {
+const updateQuestion = async (req, res) => {
 	const {
-		body: { name },
 		user: { userId },
-		params: { id: taskId },
+		params: { id: questionId },
 	} = req;
-	if (name === '') {
-		throw new BadRequestError('Must provide task name value');
-	}
-	const existingTask = await taskNameExists(name, userId, taskId);
-	if (existingTask) {
-		throw new BadRequestError(
-			'Entered task name already exists. Please enter different task name.'
-		);
-	}
-	const task = await Task.findByIdAndUpdate(
-		{ _id: taskId, createdBy: userId },
+
+	const question = await Question.findByIdAndUpdate(
+		{ _id: questionId, createdBy: userId },
 		req.body,
 		{ new: true, runValidators: true }
 	);
-	if (!task) {
-		throw new NotFoundError(`Task with id ${taskId} was not found`);
-	}
-	res.status(StatusCodes.OK).json({ task });
+	res.status(StatusCodes.OK).json({ question });
 };
 
+/*
 const getTask = async (req, res) => {
 	const {
 		user: { userId },
@@ -131,7 +119,7 @@ const filterTasksByAvatarIconAndColor = async (req, res) => {
 module.exports = {
 	getAllQuestions,
 	createQuestion,
-	// updateTask,
+	updateQuestion,
 	// getTask,
 	// deleteTask,
 	// createTaskStatus,

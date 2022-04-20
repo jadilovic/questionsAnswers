@@ -4,9 +4,6 @@ const express = require('express');
 const app = express();
 // path needed for heroku
 const path = require('path');
-
-// additional security
-const rateLimiter = require('express-rate-limit');
 const cors = require('cors');
 
 // connect DB
@@ -20,20 +17,14 @@ const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const questionsRouter = require('./routes/questions');
 const answersRouter = require('./routes/answers');
+const likesRouter = require('./routes/likes');
+const dislikesRouter = require('./routes/dislikes');
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authenticateUser = require('./middleware/authentication');
 
-// extra packages
-app.set('trust proxy', 1);
-app.use(
-	rateLimiter({
-		windowMs: 15 * 60 * 1000, // 15 minutes
-		max: 100, // limit each IP to 100 requests per windowMs
-	})
-);
 app.use(express.json());
 app.use(cors());
 
@@ -42,6 +33,8 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', authenticateUser, usersRouter);
 app.use('/api/v1/questions', authenticateUser, questionsRouter);
 app.use('/api/v1/answers', authenticateUser, answersRouter);
+app.use('/api/v1/likes', authenticateUser, likesRouter);
+app.use('/api/v1/dislikes', authenticateUser, dislikesRouter);
 
 // added for heroku
 app.get('/*', (req, res) => {

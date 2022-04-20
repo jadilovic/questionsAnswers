@@ -43,24 +43,23 @@ const useAnswerAPI = () => {
 	// 		});
 	// };
 
-	// const updateTask = async (editedTask) => {
-	// 	const { _id, name, currentStatus, description, avatarColor, avatarIcon } =
-	// 		editedTask;
-	// 	const headers = {
-	// 		Authorization: `Bearer ${getUserToken()}`,
-	// 	};
-	// 	return axios
-	// 		.patch(
-	// 			`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${_id}`,
-	// 			{ name, currentStatus, description, avatarColor, avatarIcon },
-	// 			{
-	// 				headers,
-	// 			}
-	// 		)
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		});
-	// };
+	const updateAnswer = async (editedAnswer) => {
+		const { _id, answer, likes, dislikes, createdBy } = editedAnswer;
+		const headers = {
+			Authorization: `Bearer ${getUserToken()}`,
+		};
+		return axios
+			.patch(
+				`${process.env.REACT_APP_SERVER_URL}/api/v1/questions/${_id}`,
+				{ answer, likes, dislikes, createdBy },
+				{
+					headers,
+				}
+			)
+			.then((res) => {
+				return res.data;
+			});
+	};
 
 	const deleteAnswer = async (answerId) => {
 		const headers = {
@@ -87,7 +86,7 @@ const useAnswerAPI = () => {
 		getAllAnswers,
 		createAnswer,
 		//	getTask,
-		//	updateTask,
+		updateAnswer,
 	};
 };
 

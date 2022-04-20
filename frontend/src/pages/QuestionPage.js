@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -12,7 +12,7 @@ import CreateAnswer from '../components/CreateAnswer';
 import AnswerCard from '../components/AnswerCard';
 import useAnswerAPI from '../utils/useAnswerAPI';
 import useAxiosRequest from '../utils/useAxiosRequest';
-import LikeDislike from '../components/LikeDislike';
+import LikeDislikeQuestion from '../components/LikeDislikeQuestion';
 import { getUserData } from '../auth/Authentication';
 
 export default function QuestionPage() {
@@ -23,6 +23,7 @@ export default function QuestionPage() {
 	const local = useLocalStorageHook();
 	const answerAPI = useAnswerAPI();
 	const userAPI = useAxiosRequest();
+	const initialRender = useRef(true);
 
 	const getQuestionAuthor = async (questionObject) => {
 		console.log('user id : ', questionObject.createdBy);
@@ -45,6 +46,15 @@ export default function QuestionPage() {
 		setQuestion(questionObject);
 		getQuestionAuthor(questionObject);
 	}, []);
+
+	useEffect(() => {
+		if (initialRender.current) {
+			initialRender.current = false;
+		} else {
+			local.saveCurrentQuestionObject(question);
+			getQuestionAuthor(question);
+		}
+	}, [question]);
 
 	if (loading) {
 		return <h1>Loading...</h1>;
@@ -72,9 +82,9 @@ export default function QuestionPage() {
 					</Typography>
 				</CardContent>
 				<CardActions disableSpacing>
-					<LikeDislike
-						question
-						questionId={question._id}
+					<LikeDislikeQuestion
+						question={question}
+						setQuestion={setQuestion}
 						userId={getUserData()._id}
 					/>
 				</CardActions>

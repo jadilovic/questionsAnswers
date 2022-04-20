@@ -6,14 +6,12 @@ const {
 	// getQuestion,
 	// deleteQuestion,
 	createQuestion,
-	// updateQuestion,
+	updateQuestion,
 } = require('../controllers/questions');
 
 router.route('/').post(createQuestion).get(getAllQuestions);
-// router
-// 	.route('/:id')
-// 	.get(getQuestion)
-// 	.patch(updateQuestion)
+router.route('/:id').patch(updateQuestion);
+// 	.get(getQuestion);
 // 	.delete(deleteQuestion);
 
 module.exports = router;

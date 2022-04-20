@@ -2,13 +2,11 @@ const mongoose = require('mongoose');
 
 const likeSchema = new mongoose.Schema(
 	{
-		userId: { type: Schema.Types.ObjectId, ref: 'User' },
-		questionId: { type: Schema.Types.ObjectId, ref: 'Question' },
-		answerId: { type: Schema.Types.ObjectId, ref: 'Answer' },
+		userId: { type: mongoose.Types.ObjectId, ref: 'User' },
+		questionId: { type: mongoose.Types.ObjectId, ref: 'Question' },
+		answerId: { type: mongoose.Types.ObjectId, ref: 'Answer' },
 	},
 	{ timestamps: true }
 );
 
-const Like = mongoose.model('Like', likeSchema);
-
-module.exports = { Like };
+module.exports = mongoose.model('Like', likeSchema);
