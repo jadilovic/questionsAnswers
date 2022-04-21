@@ -5,8 +5,7 @@ const useAxiosRequest = () => {
 	const createUser = async (userCredentials) => {
 		return axios({
 			method: 'POST',
-			url: `/api/v1/auth/signup`,
-			//	url: `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/signup`,
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/signup`,
 			data: {
 				firstName: userCredentials.firstName,
 				lastName: userCredentials.lastName,
@@ -22,9 +21,7 @@ const useAxiosRequest = () => {
 	const userLogin = async (userCredentials) => {
 		return axios({
 			method: 'POST',
-			url: `/api/v1/auth/login`,
-			// url: `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/login`,
-
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/login`,
 			data: {
 				email: userCredentials.email,
 				password: userCredentials.password,
