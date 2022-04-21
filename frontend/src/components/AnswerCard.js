@@ -36,9 +36,8 @@ export default function AnswerCard(props) {
 		await answerAPI.deleteAnswer(answerId);
 		const currentUser = await userAPI.getUser(getUserData()._id);
 		const updatedUser = decreaseUserAnswers(currentUser);
-		const user = await userAPI.updateUser(updatedUser);
+		await userAPI.updateUser(updatedUser);
 		getAnswers(questionId);
-		console.log(user);
 	};
 
 	const handleEdit = async (answer) => {

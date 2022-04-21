@@ -25,7 +25,6 @@ const useAnswerAPI = () => {
 				authorization: `Bearer ${getUserToken()}`,
 			},
 		}).then((res) => {
-			console.log('answer created: ', res.data);
 			return res.data;
 		});
 	};

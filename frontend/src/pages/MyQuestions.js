@@ -23,7 +23,6 @@ export default function Questions() {
 	const getQuestions = async () => {
 		try {
 			const data = await questionAPI.getAllQuestions(getUserData()._id);
-			console.log(data);
 			setQuestions([...data]);
 			setLoading(false);
 		} catch (error) {

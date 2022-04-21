@@ -44,7 +44,7 @@ function Copyright(props) {
 	return (
 		<Typography variant="body2" align="center" {...props}>
 			{'Copyright © '}
-			<a href="https://mui.com/">Tika MERN Task Manager</a>
+			<a href="https://mui.com/">MERN Stack Questions and Answers</a>
 			{` ${new Date().getFullYear()}.`}
 		</Typography>
 	);
@@ -86,7 +86,7 @@ const Login = () => {
 	}
 
 	return (
-		<RootStyle title="Login | Task Manager Aki Heroku">
+		<RootStyle title="Login | Questions and Answers">
 			<CssBaseline />
 			<MHidden width="mdDown">
 				<SectionStyle>

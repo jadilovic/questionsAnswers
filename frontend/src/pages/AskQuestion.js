@@ -44,7 +44,6 @@ export default function AskQuestion() {
 	const createQuestion = async () => {
 		try {
 			const data = await questionAPI.createQuestion(newQuestion);
-			console.log(data.question);
 			local.saveCurrentQuestionObject(data.question);
 			history.push('/question-page');
 		} catch (error) {
@@ -56,9 +55,7 @@ export default function AskQuestion() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setErrMessage('');
-		console.log(newQuestion);
 		if (validInput()) {
-			console.log(newQuestion);
 			createQuestion();
 		} else {
 			console.log('Question did not create');

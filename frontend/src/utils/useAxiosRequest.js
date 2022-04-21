@@ -33,7 +33,6 @@ const useAxiosRequest = () => {
 	};
 
 	const updateUser = async (editedUser) => {
-		console.log('edited user: ', editedUser);
 		const { firstName, lastName, email, answers } = editedUser;
 		const headers = {
 			Authorization: `Bearer ${getUserToken()}`,
@@ -76,87 +75,12 @@ const useAxiosRequest = () => {
 		});
 	};
 
-	const createTask = async (newTask) => {
-		await axios({
-			method: 'POST',
-			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks`,
-			data: {
-				newTask,
-			},
-			headers: {
-				authorization: `Bearer ${getUserToken()}`,
-			},
-		}).then((res) => {
-			console.log('task created: ', res.data);
-		});
-	};
-
-	const getTaskStatuses = async () => {
-		try {
-			return axios({
-				method: 'GET',
-				url: `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/status`,
-				headers: {
-					authorization: `Bearer ${getUserToken()}`,
-				},
-			}).then((res) => {
-				return res.data.statuses;
-			});
-		} catch (err) {
-			console.log(err.response);
-			return err.response.data.msg;
-		}
-	};
-
-	const deleteTask = async (taskId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
-		try {
-			await axios
-				.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-					headers,
-				})
-				.then((res) => {
-					console.log('task deleted: ', res.data);
-				});
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
-	// FILTER POST REQUEST
-	const filterTasks = async (iconFilters, statusFilters) => {
-		try {
-			return axios({
-				method: 'POST',
-				url: `${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/filters`,
-				data: {
-					iconFilters,
-					statusFilters,
-				},
-				headers: {
-					authorization: `Bearer ${getUserToken()}`,
-				},
-			}).then((res) => {
-				return res.data.filteredTasks;
-			});
-		} catch (err) {
-			console.log(err.response);
-			return err.response.data.msg;
-		}
-	};
-
 	return {
-		getTaskStatuses,
-		deleteTask,
 		getAllUsers,
-		createTask,
 		getUser,
 		createUser,
 		userLogin,
 		updateUser,
-		filterTasks,
 	};
 };
 

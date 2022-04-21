@@ -46,7 +46,6 @@ const LikeDislikeAnswer = (props) => {
 		}
 		const data = await likeAPI.createLike({ answerId, userId });
 		answer.likes = ++answer.likes;
-		console.log('answer : ', answer);
 		await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setLikeObject({ ...data.like });

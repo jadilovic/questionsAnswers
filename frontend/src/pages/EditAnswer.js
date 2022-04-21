@@ -44,8 +44,7 @@ export default function EditAnswer() {
 
 	const editAnswer = async () => {
 		try {
-			const editedAnswer = await answerAPI.updateAnswer(answer);
-			console.log(editedAnswer);
+			await answerAPI.updateAnswer(answer);
 			history.push('/question-page');
 		} catch (error) {
 			console.log(error.message);
