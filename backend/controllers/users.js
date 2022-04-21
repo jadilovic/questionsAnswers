@@ -46,7 +46,6 @@ const updateUser = async (req, res) => {
 		throw new BadRequestError('Must provide email value');
 	}
 
-	console.log('user body: ', req.body);
 	const existingUser = await emailExists(email, userId);
 	if (existingUser) {
 		throw new BadRequestError(

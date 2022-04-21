@@ -9,8 +9,8 @@ const {
 	updateQuestion,
 } = require('../controllers/questions');
 
-router.route('/').post(createQuestion).get(getAllQuestions);
-router.route('/:id').patch(updateQuestion);
+router.route('/').post(createQuestion);
+router.route('/:id').patch(updateQuestion).get(getAllQuestions);
 // 	.get(getQuestion);
 // 	.delete(deleteQuestion);
 

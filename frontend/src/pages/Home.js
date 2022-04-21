@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import Users from '../components/Users';
 import Questions from '../components/Questions';
-import Answers from '../components/Answers';
+import HotQuestions from '../components/HotQuestions';
 
 function Item(props) {
 	const { sx, ...other } = props;
@@ -41,14 +41,14 @@ const Home = () => {
 			<Container maxWidth="lg">
 				<Box sx={{ flexGrow: 1 }}>
 					<Grid container spacing={2}>
-						<Grid item xs={12} sm={6} md={4}>
+						<Grid item xs={12} sm={12} md={6}>
 							<Questions />
 						</Grid>
-						<Grid item xs={12} sm={6} md={4}>
+						<Grid item xs={12} sm={6} md={3}>
 							<Users />
 						</Grid>
-						<Grid item xs={12} sm={6} md={4}>
-							<Answers />
+						<Grid item xs={12} sm={6} md={3}>
+							<HotQuestions />
 						</Grid>
 					</Grid>
 				</Box>

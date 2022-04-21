@@ -45,7 +45,7 @@ export default function Users() {
 					<TableHead>
 						<TableRow>
 							<TableCell align="left">Name</TableCell>
-							<TableCell align="left">Answers</TableCell>
+							<TableCell align="right">Answers</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -55,7 +55,7 @@ export default function Users() {
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 							>
 								<TableCell align="left">{row.firstName}</TableCell>
-								<TableCell>{row.answers}</TableCell>
+								<TableCell align="right">{row.answers}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

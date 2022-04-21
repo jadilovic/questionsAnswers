@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-// import { HashRouter, Switch, Route } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
-import Edit from './pages/Edit';
 import Error from './pages/Error';
+import EditAnswer from './pages/EditAnswer';
+import MyQuestions from './pages/MyQuestions';
+import UserProfile from './pages/UserProfile';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import AskQuestion from './pages/AskQuestion';
@@ -40,7 +41,9 @@ const App = () => {
 					<PrivateRoute component={Home} path="/home" exact />
 					<PrivateRoute component={AskQuestion} path="/question" exact />
 					<PrivateRoute component={QuestionPage} path="/question-page" exact />
-					<PrivateRoute component={Edit} path="/edit" exact />
+					<PrivateRoute component={EditAnswer} path="/edit-answer" exact />
+					<PrivateRoute component={MyQuestions} path="/my-questions" exact />
+					<PrivateRoute component={UserProfile} path="/user-profile" exact />
 					<Route component={Error} path="/*" />
 				</Switch>
 			</Router>

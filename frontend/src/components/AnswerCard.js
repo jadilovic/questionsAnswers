@@ -13,6 +13,9 @@ import useAnswerAPI from '../utils/useAnswerAPI';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import { getUserData } from '../auth/Authentication';
 import LikeDislikeAnswer from './LikeDislikeAnswer';
+import useLocalStorageHook from '../utils/useLocalStorageHook';
+import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 export default function AnswerCard(props) {
 	const { answer, questionId, getAnswers, setLoading } = props;
@@ -20,6 +23,8 @@ export default function AnswerCard(props) {
 	const [authorName, setAuthorName] = useState('');
 	const answerAPI = useAnswerAPI();
 	const userAPI = useAxiosRequest();
+	const local = useLocalStorageHook();
+	const history = useHistory();
 
 	const decreaseUserAnswers = (data) => {
 		data.user.answers--;
@@ -34,6 +39,11 @@ export default function AnswerCard(props) {
 		const user = await userAPI.updateUser(updatedUser);
 		getAnswers(questionId);
 		console.log(user);
+	};
+
+	const handleEdit = async (answer) => {
+		local.saveCurrentAnswerObject(answer);
+		history.push('/edit-answer');
 	};
 
 	const getAnswerAuthor = async (userId) => {
@@ -52,22 +62,17 @@ export default function AnswerCard(props) {
 	return (
 		<Card sx={{ marginLeft: 5, marginTop: 1, maxWidth: 945 }}>
 			<CardHeader
-				avatar={
-					<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-						A
-					</Avatar>
-				}
+				avatar={<Avatar sx={{ bgcolor: red[500] }}>A</Avatar>}
 				action={
 					<>
 						{answer.createdBy === getUserData()._id && (
 							<>
-								<IconButton aria-label="settings">
-									<EditIcon color="warning" />
+								<IconButton onClick={() => handleEdit(answer)} color="warning">
+									<EditIcon />
 								</IconButton>
 								<IconButton
 									onClick={() => handleDelete(answer._id)}
 									color="error"
-									aria-label="settings"
 								>
 									<DeleteIcon />
 								</IconButton>
@@ -76,7 +81,7 @@ export default function AnswerCard(props) {
 					</>
 				}
 				title={authorName}
-				subheader={new Date(answer.createdAt).toString()}
+				subheader={moment(new Date(answer.createdAt)).format('LLL')}
 			/>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">

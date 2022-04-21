@@ -10,7 +10,6 @@ import UserMenu from './UserMenu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
 const Navbar = (props) => {
 	const { setDarkMode, darkMode } = props;
 	const history = useHistory();
@@ -43,9 +42,13 @@ const Navbar = (props) => {
 						<AddTaskIcon />
 					</Typography>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						<Link underline="none" href="/home" color="white">
+						<Button
+							variant="outlined"
+							color="inherit"
+							onClick={() => history.push('/home')}
+						>
 							Q & A
-						</Link>
+						</Button>
 					</Typography>
 					{authenticated && (
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

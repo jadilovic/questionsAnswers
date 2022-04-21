@@ -2,10 +2,10 @@ import axios from 'axios';
 import { getUserToken } from '../auth/Authentication';
 
 const useQuestionAPI = () => {
-	const getAllQuestions = async () => {
+	const getAllQuestions = async (userId) => {
 		return axios({
 			method: 'GET',
-			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/questions`,
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/questions/${userId}`,
 			headers: {
 				authorization: `Bearer ${getUserToken()}`,
 			},
@@ -30,19 +30,6 @@ const useQuestionAPI = () => {
 		});
 	};
 
-	// const getTask = async (taskId) => {
-	// 	const headers = {
-	// 		Authorization: `Bearer ${getUserToken()}`,
-	// 	};
-	// 	return axios
-	// 		.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-	// 			headers,
-	// 		})
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		});
-	// };
-
 	const updateQuestion = async (editedQuestion) => {
 		const { _id, title, question, likes, dislikes, createdBy } = editedQuestion;
 		const headers = {
@@ -61,28 +48,9 @@ const useQuestionAPI = () => {
 			});
 	};
 
-	// const deleteTask = async (taskId) => {
-	// 	const headers = {
-	// 		Authorization: `Bearer ${getUserToken()}`,
-	// 	};
-	// 	try {
-	// 		await axios
-	// 			.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-	// 				headers,
-	// 			})
-	// 			.then((res) => {
-	// 				console.log('task deleted: ', res.data);
-	// 			});
-	// 	} catch (err) {
-	// 		console.log(err.response);
-	// 	}
-	// };
-
 	return {
-		//	deleteTask,
 		getAllQuestions,
 		createQuestion,
-		//	getTask,
 		updateQuestion,
 	};
 };

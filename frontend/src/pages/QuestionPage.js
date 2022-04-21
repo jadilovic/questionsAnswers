@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import { Container } from '@mui/material';
+import moment from 'moment';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
 import CreateAnswer from '../components/CreateAnswer';
 import AnswerCard from '../components/AnswerCard';
@@ -73,7 +74,7 @@ export default function QuestionPage() {
 					}
 					action={<Typography>{questionAuthor}</Typography>}
 					title={question.title}
-					subheader={new Date(question.createdAt).toString()}
+					subheader={moment(new Date(question.createdAt)).format('LLL')}
 				/>
 				<CardContent>
 					<Typography variant="body2" color="text.secondary">

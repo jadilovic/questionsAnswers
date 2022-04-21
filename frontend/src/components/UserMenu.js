@@ -20,9 +20,22 @@ const UserMenu = () => {
 		setAnchorEl(null);
 	};
 
-	const handleLogout = () => {
+	const handleLogout = (e) => {
+		e.preventDefault();
 		logout();
 		history.push('/');
+	};
+
+	const handleMyQuestions = (e) => {
+		e.preventDefault();
+		setAnchorEl(null);
+		history.push('/my-questions');
+	};
+
+	const handleUserProfile = (e) => {
+		e.preventDefault();
+		setAnchorEl(null);
+		history.push('/user-profile');
 	};
 
 	return (
@@ -62,11 +75,27 @@ const UserMenu = () => {
 						{`${getUserData()?.email}`}
 					</Typography>
 				</MenuItem>
+				<Typography margin={2} align="center">
+					<Button variant="contained" color="info" onClick={handleMyQuestions}>
+						My Questions
+					</Button>
+				</Typography>
+				<Typography margin={2} align="center">
+					<Button
+						style={{ minWidth: 142 }}
+						variant="contained"
+						color="success"
+						onClick={handleUserProfile}
+					>
+						Profile
+					</Button>
+				</Typography>
 				<Typography align="center">
 					<Button
+						style={{ minWidth: 142 }}
 						variant="contained"
-						color="warning"
-						onClick={() => handleLogout()}
+						color="error"
+						onClick={handleLogout}
 					>
 						Logout
 					</Button>
