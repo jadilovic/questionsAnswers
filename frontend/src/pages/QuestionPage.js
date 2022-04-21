@@ -26,7 +26,6 @@ export default function QuestionPage() {
 	const initialRender = useRef(true);
 
 	const getQuestionAuthor = async (questionObject) => {
-		console.log('user id : ', questionObject.createdBy);
 		const data = await userAPI.getUser(questionObject.createdBy);
 		setQuestionAuthor(data.user.firstName);
 		getAnswers(questionObject._id);
@@ -45,7 +44,7 @@ export default function QuestionPage() {
 		const questionObject = local.getCurrentQuestionObject();
 		setQuestion(questionObject);
 		getQuestionAuthor(questionObject);
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (initialRender.current) {
@@ -54,7 +53,7 @@ export default function QuestionPage() {
 			local.saveCurrentQuestionObject(question);
 			getQuestionAuthor(question);
 		}
-	}, [question]);
+	}, [question]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (loading) {
 		return <h1>Loading...</h1>;
@@ -102,11 +101,7 @@ export default function QuestionPage() {
 				);
 			})}
 
-			<CreateAnswer
-				getAnswers={getAnswers}
-				questionId={question._id}
-				setLoading={setLoading}
-			/>
+			<CreateAnswer getAnswers={getAnswers} questionId={question._id} />
 		</Container>
 	);
 }

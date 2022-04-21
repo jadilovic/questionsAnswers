@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Box, Alert, Stack, Grid } from '@mui/material';
-import QuizIcon from '@mui/icons-material/Quiz';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Box, Alert, Stack } from '@mui/material';
 import useAnswerAPI from '../utils/useAnswerAPI';
 import useAxiosRequest from '../utils/useAxiosRequest';
-import { useHistory } from 'react-router-dom';
 import useLocalStorage from '../utils/useLocalStorageHook';
 import { getUserData } from '../auth/Authentication';
 
 export default function AskQuestion(props) {
-	const { getAnswers, questionId, setLoading } = props;
+	const { getAnswers } = props;
 	const [errMessage, setErrMessage] = useState('');
 	const [newAnswer, setNewAnswer] = useState({ answer: '' });
 	const [errors, setErrors] = useState({ answer: '' });
 	const answerAPI = useAnswerAPI();
 	const userAPI = useAxiosRequest();
-	const history = useHistory();
 	const local = useLocalStorage();
 
 	const validInput = () => {
@@ -47,16 +41,13 @@ export default function AskQuestion(props) {
 
 	const createAnswer = async () => {
 		try {
-			setLoading(true);
 			const questionId = local.getCurrentQuestionObject()._id;
 			newAnswer.questionId = questionId;
-			const data = await answerAPI.createAnswer(newAnswer);
+			await answerAPI.createAnswer(newAnswer);
 			const currentUser = await userAPI.getUser(getUserData()._id);
 			const updatedUser = increaseUserAnswers(currentUser);
-			const user = await userAPI.updateUser(updatedUser);
+			await userAPI.updateUser(updatedUser);
 			getAnswers(questionId);
-			console.log(data.answer);
-			console.log(user.user.answers);
 			setNewAnswer({ answer: '' });
 		} catch (error) {
 			console.log(error.message);
@@ -67,9 +58,7 @@ export default function AskQuestion(props) {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setErrMessage('');
-		console.log(newAnswer);
 		if (validInput()) {
-			console.log(newAnswer);
 			createAnswer();
 		} else {
 			console.log('Answer did not create');

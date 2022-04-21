@@ -3,7 +3,6 @@ import { getUserToken } from '../auth/Authentication';
 
 const useDislikeAPI = () => {
 	const createDislike = async (newDislike) => {
-		console.log('like : ', newDislike);
 		return await axios({
 			method: 'POST',
 			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/dislikes`,
@@ -14,7 +13,6 @@ const useDislikeAPI = () => {
 				authorization: `Bearer ${getUserToken()}`,
 			},
 		}).then((res) => {
-			console.log('dislike created: ', res.data);
 			return res.data;
 		});
 	};
@@ -32,7 +30,6 @@ const useDislikeAPI = () => {
 					}
 				)
 				.then((res) => {
-					console.log('dislike found: ', res.data);
 					return res.data;
 				});
 		} catch (err) {
@@ -53,7 +50,6 @@ const useDislikeAPI = () => {
 					}
 				)
 				.then((res) => {
-					console.log('dislike found: ', res.data);
 					return res.data;
 				});
 		} catch (err) {
@@ -74,7 +70,7 @@ const useDislikeAPI = () => {
 					}
 				)
 				.then((res) => {
-					console.log('dislike deleted: ', res.data);
+					return res.data;
 				});
 		} catch (err) {
 			console.log(err.response);

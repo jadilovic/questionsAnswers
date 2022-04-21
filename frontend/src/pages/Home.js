@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Page from '../components/Page';
-import { Grid, Container, Paper } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import Users from '../components/Users';

@@ -29,7 +29,7 @@ export default function Users() {
 
 	useEffect(() => {
 		getUsers();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (loading) {
 		return <h1>Loading...</h1>;

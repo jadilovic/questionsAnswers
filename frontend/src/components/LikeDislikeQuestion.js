@@ -42,7 +42,6 @@ const LikeDislikeQuestion = (props) => {
 		const data = await dislikeAPI.getDislike(variable.questionId);
 		setLikeObject({ ...data.dislike });
 		setCountDislikes(props.question.dislikes);
-		console.log('props question : ', props.question);
 		if (data.dislike) {
 			setDislikeStatus(true);
 			setCountDislikes(props.question.dislikes);
@@ -57,7 +56,7 @@ const LikeDislikeQuestion = (props) => {
 			getQuestionDislikeStatus();
 		} else {
 		}
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const createLike = async () => {
 		if (dislikeStatus) {
@@ -65,26 +64,21 @@ const LikeDislikeQuestion = (props) => {
 			setDislikeStatus(false);
 		}
 		const data = await likeAPI.createLike(variable);
-		console.log('created like : ', data.like);
 		const question = props.question;
 		question.likes = ++question.likes;
 		setCountLikes(question.likes);
-		console.log(question);
 		const updatedQuestion = await questionAPI.updateQuestion(question);
 		setQuestion({ ...updatedQuestion.question });
 		setLikeObject({ ...data.like });
 	};
 
 	const deleteLike = async () => {
-		console.log('to delete like : ', likeObject);
 		await likeAPI.deleteLike(likeObject._id);
 		const question = props.question;
 		question.likes = --question.likes;
 		setCountLikes(question.likes);
-		console.log(question);
 		const updatedQuestion = await questionAPI.updateQuestion(question);
 		setQuestion({ ...updatedQuestion.question });
-		console.log('updated question : ', updatedQuestion.question);
 		setLikeObject({});
 	};
 
@@ -104,26 +98,21 @@ const LikeDislikeQuestion = (props) => {
 			setLikeStatus(false);
 		}
 		const data = await dislikeAPI.createDislike(variable);
-		console.log('created dislike : ', data.dislike);
 		const question = props.question;
 		question.dislikes = ++question.dislikes;
 		setCountDislikes(question.dislikes);
-		console.log(question);
 		const updatedQuestion = await questionAPI.updateQuestion(question);
 		setQuestion(updatedQuestion.question);
 		setDislikeObject({ ...data.dislike });
 	};
 
 	const deleteDislike = async () => {
-		console.log('to delete dislike : ', dislikeObject);
 		await dislikeAPI.deleteDislike(dislikeObject._id);
 		const question = props.question;
 		question.dislikes = --question.dislikes;
 		setCountDislikes(question.dislikes);
-		console.log(question);
 		const updatedQuestion = await questionAPI.updateQuestion(question);
 		setQuestion(updatedQuestion.question);
-		console.log('updated question : ', updatedQuestion.question);
 		setDislikeObject({});
 	};
 

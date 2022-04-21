@@ -3,7 +3,6 @@ import { getUserToken } from '../auth/Authentication';
 
 const useLikeAPI = () => {
 	const createLike = async (newLike) => {
-		console.log('like : ', newLike);
 		return await axios({
 			method: 'POST',
 			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/likes`,
@@ -14,7 +13,6 @@ const useLikeAPI = () => {
 				authorization: `Bearer ${getUserToken()}`,
 			},
 		}).then((res) => {
-			console.log('like created: ', res.data);
 			return res.data;
 		});
 	};
@@ -29,7 +27,6 @@ const useLikeAPI = () => {
 					headers,
 				})
 				.then((res) => {
-					console.log('like found: ', res.data);
 					return res.data;
 				});
 		} catch (err) {
@@ -50,7 +47,6 @@ const useLikeAPI = () => {
 					}
 				)
 				.then((res) => {
-					console.log('like found: ', res.data);
 					return res.data;
 				});
 		} catch (err) {
@@ -68,7 +64,7 @@ const useLikeAPI = () => {
 					headers,
 				})
 				.then((res) => {
-					console.log('like deleted: ', res.data);
+					return res.data;
 				});
 		} catch (err) {
 			console.log(err.response);

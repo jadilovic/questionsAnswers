@@ -19,6 +19,7 @@ const LikeDislikeAnswer = (props) => {
 
 	const getAnswer = async () => {
 		const data = await answerAPI.getAnswer(answerId);
+
 		setAnswer({ ...data.answer });
 		getAnswerLikeStatus();
 	};
@@ -36,7 +37,7 @@ const LikeDislikeAnswer = (props) => {
 
 	useEffect(() => {
 		getAnswer();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const createLike = async () => {
 		if (dislikeObject?.answerId) {
@@ -46,7 +47,7 @@ const LikeDislikeAnswer = (props) => {
 		const data = await likeAPI.createLike({ answerId, userId });
 		answer.likes = ++answer.likes;
 		console.log('answer : ', answer);
-		const updatedAnswer = await answerAPI.updateAnswer(answer);
+		await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setLikeObject({ ...data.like });
 	};
@@ -54,7 +55,7 @@ const LikeDislikeAnswer = (props) => {
 	const deleteLike = async () => {
 		await likeAPI.deleteLike(likeObject._id);
 		answer.likes = --answer.likes;
-		const updatedAnswer = await answerAPI.updateAnswer(answer);
+		await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setLikeObject({});
 	};
@@ -74,7 +75,7 @@ const LikeDislikeAnswer = (props) => {
 		}
 		const data = await dislikeAPI.createDislike({ answerId, userId });
 		answer.dislikes = ++answer.dislikes;
-		const updatedAnswer = await answerAPI.updateAnswer(answer);
+		await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setDislikeObject({ ...data.dislike });
 	};
@@ -82,7 +83,7 @@ const LikeDislikeAnswer = (props) => {
 	const deleteDislike = async () => {
 		await dislikeAPI.deleteDislike(dislikeObject._id);
 		answer.dislikes = --answer.dislikes;
-		const updatedAnswer = await answerAPI.updateAnswer(answer);
+		await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setDislikeObject({});
 	};

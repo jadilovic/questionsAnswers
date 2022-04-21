@@ -31,7 +31,7 @@ export default function Questions() {
 
 	useEffect(() => {
 		getQuestions();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleQuestion = (questionObject) => {
 		local.saveCurrentQuestionObject(questionObject);

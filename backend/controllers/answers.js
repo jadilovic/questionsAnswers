@@ -3,7 +3,6 @@ const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 
 const getAllAnswers = async (req, res) => {
-	console.log(req.params.id);
 	const answers = await Answer.find({ questionId: req.params.id }).sort({
 		createdAt: -1,
 	});
@@ -20,7 +19,7 @@ const getAnswer = async (req, res) => {
 	const {
 		params: { id: answerId },
 	} = req;
-	const answer = await Answer.findOne({ answerId });
+	const answer = await Answer.findOne({ _id: answerId });
 	res.status(StatusCodes.OK).json({ answer });
 };
 

@@ -22,7 +22,7 @@ function Copyright(props) {
 		>
 			{'Copyright © '}
 			<a color="inherit" href="https://mui.com/">
-				Tika MERN Task Manager
+				Questions and Answers Project
 			</a>
 			{` ${new Date().getFullYear()}.`}
 		</Typography>
@@ -111,7 +111,7 @@ const Signup = () => {
 					<PersonAdd />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					Task Manager Sign up
+					Questions & Answers Sign up
 				</Typography>
 				<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
 					{error && (
