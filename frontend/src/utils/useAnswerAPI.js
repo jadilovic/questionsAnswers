@@ -50,7 +50,7 @@ const useAnswerAPI = () => {
 		};
 		return axios
 			.patch(
-				`${process.env.REACT_APP_SERVER_URL}/api/v1/questions/${_id}`,
+				`${process.env.REACT_APP_SERVER_URL}/api/v1/answers/${_id}`,
 				{ answer, likes, dislikes, createdBy },
 				{
 					headers,

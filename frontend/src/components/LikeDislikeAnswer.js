@@ -7,16 +7,11 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import useLikeAPI from '../utils/useLikeAPI';
 import useAnswerAPI from '../utils/useAnswerAPI';
 import useDislikeAPI from '../utils/useDislikeAPI';
-import useLocalStorageHook from '../utils/useLocalStorageHook';
 
 const LikeDislikeAnswer = (props) => {
 	const { userId, answerId } = props;
 	const [likeObject, setLikeObject] = useState({});
 	const [dislikeObject, setDislikeObject] = useState({});
-	const [countLikes, setCountLikes] = useState(0);
-	const [countDislikes, setCountDislikes] = useState(0);
-	const [likeStatus, setLikeStatus] = useState(false);
-	const [dislikeStatus, setDislikeStatus] = useState(false);
 	const [answer, setAnswer] = useState({});
 	const likeAPI = useLikeAPI();
 	const answerAPI = useAnswerAPI();
@@ -31,26 +26,12 @@ const LikeDislikeAnswer = (props) => {
 	const getAnswerLikeStatus = async () => {
 		const data = await likeAPI.getLikeAnswer(answerId);
 		setLikeObject({ ...data.like });
-		setCountLikes(answer.likes);
-		if (data.like) {
-			setLikeStatus(true);
-			setCountLikes(answer.likes);
-		} else {
-			setLikeStatus(false);
-		}
 		getAnswerDislikeStatus();
 	};
 
 	const getAnswerDislikeStatus = async () => {
 		const data = await dislikeAPI.getDislikeAnswer(answerId);
-		setLikeObject({ ...data.dislike });
-		setCountDislikes(answer.dislikes);
-		if (data.dislike) {
-			setDislikeStatus(true);
-			setCountDislikes(answer.dislikes);
-		} else {
-			setDislikeStatus(false);
-		}
+		setDislikeObject({ ...data.dislike });
 	};
 
 	useEffect(() => {
@@ -58,13 +39,13 @@ const LikeDislikeAnswer = (props) => {
 	}, []);
 
 	const createLike = async () => {
-		if (dislikeStatus) {
+		if (dislikeObject?.answerId) {
 			deleteDislike();
-			setDislikeStatus(false);
+			setDislikeObject(null);
 		}
 		const data = await likeAPI.createLike({ answerId, userId });
 		answer.likes = ++answer.likes;
-		setCountLikes(answer.likes);
+		console.log('answer : ', answer);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setLikeObject({ ...data.like });
@@ -73,30 +54,26 @@ const LikeDislikeAnswer = (props) => {
 	const deleteLike = async () => {
 		await likeAPI.deleteLike(likeObject._id);
 		answer.likes = --answer.likes;
-		setCountLikes(answer.likes);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setLikeObject({});
 	};
 
 	const handleThumbUp = () => {
-		if (!likeStatus) {
-			setLikeStatus(!likeStatus);
+		if (!likeObject?.answerId) {
 			createLike();
 		} else {
-			setLikeStatus(!likeStatus);
 			deleteLike();
 		}
 	};
 
 	const createDislike = async () => {
-		if (likeStatus) {
+		if (likeObject?.answerId) {
 			deleteLike();
-			setLikeStatus(false);
+			setLikeObject(null);
 		}
 		const data = await dislikeAPI.createDislike({ answerId, userId });
 		answer.dislikes = ++answer.dislikes;
-		setCountDislikes(answer.dislikes);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setDislikeObject({ ...data.dislike });
@@ -105,18 +82,15 @@ const LikeDislikeAnswer = (props) => {
 	const deleteDislike = async () => {
 		await dislikeAPI.deleteDislike(dislikeObject._id);
 		answer.dislikes = --answer.dislikes;
-		setCountDislikes(answer.dislikes);
 		const updatedAnswer = await answerAPI.updateAnswer(answer);
 		setAnswer({ ...answer });
 		setDislikeObject({});
 	};
 
 	const handleThumbDown = () => {
-		if (!dislikeStatus) {
-			setDislikeStatus(!dislikeStatus);
+		if (!dislikeObject?.answerId) {
 			createDislike();
 		} else {
-			setDislikeStatus(!dislikeStatus);
 			deleteDislike();
 		}
 	};
@@ -124,13 +98,17 @@ const LikeDislikeAnswer = (props) => {
 	return (
 		<div>
 			<IconButton onClick={handleThumbUp}>
-				{likeStatus ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+				{likeObject?.answerId ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
 			</IconButton>
-			{countLikes}{' '}
+			{answer.likes}{' '}
 			<IconButton onClick={handleThumbDown}>
-				{dislikeStatus ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
+				{dislikeObject?.answerId ? (
+					<ThumbDownAltIcon />
+				) : (
+					<ThumbDownOffAltIcon />
+				)}
 			</IconButton>
-			{countDislikes}
+			{answer.dislikes}
 		</div>
 	);
 };
