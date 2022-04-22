@@ -2,9 +2,9 @@ To to run locally:
 npm run dev
 
 .env file in backend includes:
-MONGO_URI
-JWT_SECRET
-JWT_LIFETIME
+MONGO_URI,
+JWT_SECRET,
+JWT_LIFETIME,
 
 .env file in frontend includes:
 REACT_APP_SERVER_URL=http://localhost:5000
